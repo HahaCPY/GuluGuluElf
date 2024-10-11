@@ -64,14 +64,15 @@ async def button(update, context):
         user_states[user_id].append({'payer': payer})
         keyboard = [
             [InlineKeyboardButton("🍽️ Eat", callback_data='eat')],
-            [InlineKeyboardButton("🎮 Play", callback_data='play')]
+            [InlineKeyboardButton("🎮 Play", callback_data='play')],
+            [InlineKeyboardButton("🐣 Else", callback_data='else')]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(text=f"{payer} paid. What's the category?", reply_markup=reply_markup)
     
-    elif query.data in ['eat', 'play']:
+    elif query.data in ['eat', 'play', 'else']:
         user_states[user_id][-1]['category'] = query.data
-        await query.edit_message_text(text=f"Category: {query.data}./n Please enter the amount:")
+        await query.edit_message_text(text=f"Category: {query.data}. Please enter the amount:")
         return TYPING_REPLY
     
     elif query.data == 'view_records':
